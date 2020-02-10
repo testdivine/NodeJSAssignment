@@ -1,9 +1,11 @@
 import express from "express";
 import GroupService from "../service/groupservice";
+import UserGroupService from "../service/usergroupserice";
 
 const groupRoutes = express.Router();
 
 const groupServiceInstance = new GroupService();
+const userGroupServiceInstance = new UserGroupService();
 
 groupRoutes.post("/create", async (req, res) => {
   groupServiceInstance.addGroup(req.body).then(result => {
@@ -48,9 +50,22 @@ groupRoutes.get("/getgroup/:id", async (req, res) => {
 groupRoutes.delete("/delete/:id", async (req, res) => {
   groupServiceInstance.removeGroup(req.params.id).then(result => {
     if (result) {
-      res.status(200).send("Group deleted successfully");
+      userGroupServiceInstance
+        .deleteDataByGroupId(req.params.id)
+        .then(result => {
+          if (result) {
+            res
+              .status(200)
+              .send("Group deleted successfully along with mapping");
+          } else {
+            res.status(502).send("Error in removing mapping");
+          }
+        })
+        .catch(error => {
+          res.status(502).send("Error in executing the request");
+        });
     } else {
-      res.status(502).send("Error in deleting group");
+      res.status(502).send("Error in executing the request");
     }
   });
 });

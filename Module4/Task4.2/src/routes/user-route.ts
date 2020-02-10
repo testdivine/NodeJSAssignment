@@ -1,9 +1,11 @@
-import express from 'express';
+import express from "express";
 import UserService from "../service/userservice";
+import UserGroupService from "../service/usergroupserice";
 
 const userRoutes = express.Router();
 
 const userServiceInstance = new UserService();
+const userGroupServiceInstance = new UserGroupService();
 
 userRoutes.post("/create", async (req, res) => {
   userServiceInstance.insertUser(req.body).then(result => {
@@ -58,9 +60,22 @@ userRoutes.get("/getuser/:id", async (req, res) => {
 userRoutes.delete("/delete/:id", async (req, res) => {
   userServiceInstance.deleteUser(req.params.id).then(result => {
     if (result) {
-      res.status(200).send("User deleted");
+      userGroupServiceInstance
+        .deleteDataByUserId(req.params.id)
+        .then(result => {
+          if (result) {
+            res
+              .status(200)
+              .send("User deleted successfully along with mapping");
+          } else {
+            res.status(502).send("Error in removing mapping");
+          }
+        })
+        .catch(error => {
+          res.send(502).send("Error in executing request");
+        });
     } else {
-      res.status(502).send("Error in deleting user");
+      res.status(502).send("Error in executing the request");
     }
   });
 });

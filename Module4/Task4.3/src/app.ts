@@ -1,24 +1,14 @@
 import express from "express";
-import { Sequelize } from "sequelize-typescript";
 import { Users } from "./models/Users";
 import userRoutes from "./routes/user-route";
 import groupRoutes from './routes/group-route';
 import { Group } from "./models/Group";
 import { UserGroup } from "./models/UserGroup";
 import userGroupRoutes from "./routes/user_group-route";
+import sequelizeManager from "./sequelize-manager";
 
 const app = express();
-
-const sequelize = new Sequelize("TestDB", "postgres", "adminadmin", {
-  host: "localhost",
-  dialect: "postgres",
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-  models: [__dirname + "/models"]
-});
+const sequelize = sequelizeManager;
 
 Users.sync();
 Group.sync();
