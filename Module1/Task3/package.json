@@ -1,0 +1,19 @@
+{
+  "name": "task3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "task3": "babel src -d lib"
+  },
+  "author": "ketan",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}
