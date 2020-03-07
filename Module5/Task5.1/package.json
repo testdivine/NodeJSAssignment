@@ -1,0 +1,33 @@
+{
+  "name": "task-3.1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server.js",
+  "scripts": {
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ketan Khare",
+  "license": "ISC",
+  "dependencies": {
+    "@types/morgan": "^1.7.37",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "pg": "^7.17.1",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^5.21.3",
+    "sequelize-typescript": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.29",
+    "@types/express": "^4.17.2",
+    "@types/node": "^13.5.0",
+    "@types/sequelize": "^4.28.8",
+    "@types/validator": "^12.0.1",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
+  }
+}
